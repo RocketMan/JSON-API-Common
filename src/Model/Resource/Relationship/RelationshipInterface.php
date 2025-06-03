@@ -46,5 +46,5 @@ interface RelationshipInterface
      * @param string|null $name
      * @return RelationshipInterface
      */
-    public function duplicate(string $name = null): RelationshipInterface;
+    public function duplicate(?string $name = null): RelationshipInterface;
 }

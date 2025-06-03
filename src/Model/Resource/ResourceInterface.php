@@ -46,8 +46,8 @@ interface ResourceInterface
      * Creates a new resource containing all data from the current one.
      * If set, the new resource will have the given id.
      *
-     * @param string $id
+     * @param string|null $id
      * @return ResourceInterface
      */
-    public function duplicate(string $id = null): ResourceInterface;
+    public function duplicate(?string $id = null): ResourceInterface;
 }

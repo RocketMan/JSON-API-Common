@@ -29,7 +29,7 @@ trait JsonApiTrait
      * @param ResourceInterface|null $resource
      * @return DocumentInterface
      */
-    protected function singleResourceDocument(ResourceInterface $resource = null): DocumentInterface
+    protected function singleResourceDocument(?ResourceInterface $resource = null): DocumentInterface
     {
         return new Document($resource);
     }
@@ -48,7 +48,7 @@ trait JsonApiTrait
      * @param ResourceInterface|null $related
      * @return RelationshipInterface
      */
-    protected function toOneRelationship(string $name, ResourceInterface $related = null): RelationshipInterface
+    protected function toOneRelationship(string $name, ?ResourceInterface $related = null): RelationshipInterface
     {
         return new Relationship($name, $related);
     }

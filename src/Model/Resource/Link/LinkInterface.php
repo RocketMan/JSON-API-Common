@@ -32,5 +32,5 @@ interface LinkInterface
      * @param string|null $name
      * @return LinkInterface
      */
-    public function duplicate(string $name = null): LinkInterface;
+    public function duplicate(?string $name = null): LinkInterface;
 }

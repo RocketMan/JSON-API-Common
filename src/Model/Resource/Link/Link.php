@@ -77,7 +77,7 @@ class Link implements LinkInterface
      * @return LinkInterface
      * @throws \InvalidArgumentException
      */
-    public function duplicate(string $name = null): LinkInterface
+    public function duplicate(?string $name = null): LinkInterface
     {
         $link = new self($name ?? $this->name(), $this->href());
         $link->metaInformation()->mergeCollection($this->metaInformation());

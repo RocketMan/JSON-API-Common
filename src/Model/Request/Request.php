@@ -466,7 +466,7 @@ class Request implements RequestInterface
      * @param string|null $explodeBy
      * @return array|string|int|float
      */
-    public function filterValue(string $name, string $explodeBy = null)
+    public function filterValue(string $name, ?string $explodeBy = null)
     {
         if ($explodeBy) {
             return explode($explodeBy, $this->filter[$name]);

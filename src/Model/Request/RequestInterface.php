@@ -117,7 +117,7 @@ interface RequestInterface
      * @param string|null $explodeBy
      * @return array|string|int|float
      */
-    public function filterValue(string $name, string $explodeBy = null);
+    public function filterValue(string $name, ?string $explodeBy = null);
 
     /**
      * Define a sort parameter. This method will manipulate the uri of the request.

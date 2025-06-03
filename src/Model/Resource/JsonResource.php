@@ -123,11 +123,11 @@ class JsonResource implements ResourceInterface, RelatedMetaInformationInterface
      * Creates a new resource containing all data from the current one.
      * If set, the new request will have the given id.
      *
-     * @param string $id
+     * @param string|null $id
      * @return ResourceInterface
      * @throws \InvalidArgumentException
      */
-    public function duplicate(string $id = null): ResourceInterface
+    public function duplicate(?string $id = null): ResourceInterface
     {
         $resource = new self($this->type(), $id ?? $this->id(), $this->attributes()->all());
 

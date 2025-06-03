@@ -60,11 +60,11 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
      * @return ResourceInterface
      * @throws \LogicException
      */
-    public function first(string $type = null): ResourceInterface
+    public function first(?string $type = null): ResourceInterface
     {
         if ($this->isEmpty()) {
             throw new \LogicException('Collection does not contain any resources!');

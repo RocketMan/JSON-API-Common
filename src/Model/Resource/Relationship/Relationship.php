@@ -115,7 +115,7 @@ class Relationship implements RelationshipInterface
      * @return RelationshipInterface
      * @throws \InvalidArgumentException
      */
-    public function duplicate(string $name = null): RelationshipInterface
+    public function duplicate(?string $name = null): RelationshipInterface
     {
         if ($this->shouldBeHandledAsCollection()) {
             $related = [];
