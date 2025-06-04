@@ -1,15 +1,27 @@
 JSON API Common
 ===============
-[![Build Status](https://travis-ci.org/eosnewmedia/JSON-API-Common.svg?branch=master)](https://travis-ci.org/eosnewmedia/JSON-API-Common)
+[![Build Status](https://github.com/RocketMan/JSON-API-Common/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/RocketMan/JSON-API-Common)
 
-This library contains php classes and interfaces shared between 
-[`enm/json-api-server`](https://eosnewmedia.github.io/JSON-API-Server/) and 
-[`enm/json-api-client`](https://github.com/eosnewmedia/JSON-API-Client).
+[![license](https://img.shields.io/github/license/RocketMan/JSON-API-Common)](https://github.com/RocketMan/JSON-API-Common/blob/master/LICENSE)
+[![latest version](https://badgen.net/github/release/RocketMan/JSON-API-Common?label=latest)](https://github.com/RocketMan/JSON-API-Common/releases)
+
+This is a fork of the upstream
+[`enm/json-api-common`](https://github.com/eosnewmedia/JSON-API-Common)
+with post-release fixes.
+
+It contains code shared by the
+[JSON-API-Server](https://github.com/RocketMan/JSON-API-Server) and
+JSON-API-Client projects.
 
 ## Installation
 
+Generally, you will establish a composer dependency on json-api-server
+or json-api-client as appropriate, and they will in turn pull in this
+library.  If you wish to include this library explicitly, you can do
+so like this:
+
 ```sh
-composer require enm/json-api-common
+composer require rocketman/json-api-common
 ```
 
 *****

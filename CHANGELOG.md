@@ -1,4 +1,18 @@
 # Changelog
+## 3.2.2+rocketman.1
+1. replaced implicit nullable parameters with nullable types
+1. fixed Request apiPrefix for multilevel prefixes
+1. fixed parseUriPath field handling
+1. migrated CI to github
+
+## 3.2.2
+1. fixed nullable pagination links
+1. fixed query without backwards compatibility break
+
+## 3.2.1
+1. fixed query without backwards compatibility break
+1. filter the query params since this breaks servers. Drupal's JsonAPI expects a valid `sort` parameter, when the library sends just `sort=`.
+
 ## 3.2.0
 1. added "merge" to resource collections
 1. added "merge" to relationship collections
