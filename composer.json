@@ -1,5 +1,5 @@
 {
-  "name": "enm/json-api-common",
+  "name": "rocketman/json-api-common",
   "description": "Basic php implementation (shared structures for client and server) of the json api specification (jsonapi.org)",
   "type": "library",
   "license": "MIT",
@@ -7,6 +7,10 @@
     {
       "name": "Philipp Marien",
       "email": "marien@eosnewmedia.de"
+    },
+    {
+      "name": "Jim Mason",
+      "email": "jmason@ibinx.com"
     }
   ],
   "minimum-stability": "stable",
