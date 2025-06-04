@@ -33,6 +33,11 @@ class Request implements RequestInterface
     private $apiPrefix;
 
     /**
+     * @var array|null
+     */
+    private $apiPrefixMatches;
+
+    /**
      * @var string|null
      */
     private $fileInPath;
@@ -127,6 +132,7 @@ class Request implements RequestInterface
         $this->uri = $uri;
         $this->requestBody = $requestBody;
         $this->apiPrefix = $apiPrefix ? trim($apiPrefix, '/') : null;
+        $this->apiPrefixMatches = null;
 
         $this->parseUriPath($this->uri->getPath());
         $this->parseUriQuery($this->uri->getQuery());
@@ -142,7 +148,7 @@ class Request implements RequestInterface
     private function parseUriPath(string $path): void
     {
         preg_match(
-            '/^(([a-zA-Z0-9\_\-\.\/]+.php)(\/)|)(' . $this->apiPrefix . ')([\/a-zA-Z0-9\_\-\.]+)$/',
+            '/^(([a-zA-Z0-9\_\-\.\/]+.php)(\/)|)(' . str_replace('/', '\\/', $this->apiPrefix ?? '') . ')([\/a-zA-Z0-9\_\-\.]+)$/',
             trim($path, '/'),
             $matches
         );
@@ -150,11 +156,20 @@ class Request implements RequestInterface
         if (array_key_exists(3, $matches)) {
             $this->fileInPath = $matches[3];
         }
-        if (!array_key_exists(5, $matches)) {
-            $matches[5] = '';
+
+        // due to the possible presence of capture groups within
+        // the apiPrefix, we must access the segments group by
+        // counting from the end (it is the last capture group)
+        $last = \count($matches);
+        if (!$last || !array_key_exists(--$last, $matches)) {
+            $matches[$last] = '';
         }
 
-        $segments = explode('/', trim($matches[5], '/'));
+        if ($this->apiPrefix && $last - 4 > 0) {
+            $this->apiPrefixMatches = array_slice($matches, 4, $last - 4);
+        }
+
+        $segments = explode('/', trim($matches[$last], '/'));
         // fill missing segments
         while (\count($segments) < 4) {
             $segments[] = null;
@@ -533,6 +548,14 @@ class Request implements RequestInterface
     }
 
     /**
+     * @return array|null
+     */
+    public function apiPrefixMatches(): ?array
+    {
+        return $this->apiPrefixMatches;
+    }
+
+    /**
      * Creates a request for the given relationship.
      * If called twice, the call will return the already created sub request.
      * A sub request does not contain pagination and sorting from its parent.
@@ -572,7 +595,7 @@ class Request implements RequestInterface
             $subRequest = new self(
                 $this->method(),
                 $this->uri()
-                    ->withPath(($this->fileInPath ? '/' . $this->fileInPath : '') . ($this->apiPrefix ? '/' . $this->apiPrefix : '') . '/' . $type . '/' . $id . $relationshipPart)
+                    ->withPath(($this->fileInPath ? '/' . $this->fileInPath : '') . ($this->apiPrefixMatches ? '/' . $this->apiPrefixMatches[0] : '') . '/' . $type . '/' . $id . $relationshipPart)
                     ->withQuery(
                         http_build_query([
                             'fields' => $queryFields,
