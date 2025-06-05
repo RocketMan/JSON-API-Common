@@ -160,6 +160,19 @@ interface RequestInterface
     public function requestBody(): ?DocumentInterface;
 
     /**
+     * Retrieve the matched text for the apiPrefix if available.
+     *
+     * Array index 0 contains the entire matched apiPrefix.  If the
+     * apiPrefix is a regular expression, matched text for capture groups,
+     * if any, will be returned in order, commencing at index 1.
+     *
+     * If there is no apiPrefix or the URI is invalid, the method returns null.
+     *
+     * @return array|null
+     */
+    public function apiPrefixMatches(): ?array;
+
+    /**
      * Creates a request for the given relationship.
      * If called twice, the call will return the already created sub request.
      * A sub request does not contain pagination and sorting from its parent.

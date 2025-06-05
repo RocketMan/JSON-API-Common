@@ -65,7 +65,7 @@ class RequestTest extends TestCase
                 'GET',
                 new Uri('/index.php/api/v1.2/extra/resource/12345'),
                 null,
-                'api/v\d+(?:\.\d+)?/extra'
+                'api/v(\d+(\.\d+)?)/extra'
             );
         } catch(\Exception $e) {
             $this->fail($e->getMessage() . ' (' . $e->getFile() . ', ' . $e->getLine() . ')');
@@ -74,5 +74,10 @@ class RequestTest extends TestCase
 
         self::assertEquals('resource', $request->type());
         self::assertEquals('12345', $request->id());
+
+        $matches = $request->apiPrefixMatches();
+        self::assertNotNull($matches);
+        self::assertEquals(3, \count($matches));
+        self::assertEquals('1.2', $matches[1]);
     }
 }

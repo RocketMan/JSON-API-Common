@@ -33,6 +33,11 @@ class Request implements RequestInterface
     private $apiPrefix;
 
     /**
+     * @var array|null
+     */
+    private $apiPrefixMatches;
+
+    /**
      * @var string|null
      */
     private $fileInPath;
@@ -127,6 +132,7 @@ class Request implements RequestInterface
         $this->uri = $uri;
         $this->requestBody = $requestBody;
         $this->apiPrefix = $apiPrefix ? trim($apiPrefix, '/') : null;
+        $this->apiPrefixMatches = null;
 
         $this->parseUriPath($this->uri->getPath());
         $this->parseUriQuery($this->uri->getQuery());
@@ -150,11 +156,20 @@ class Request implements RequestInterface
         if (array_key_exists(3, $matches)) {
             $this->fileInPath = $matches[3];
         }
-        if (!array_key_exists(5, $matches)) {
-            $matches[5] = '';
+
+        // due to the possible presence of capture groups within
+        // the apiPrefix, we must access the segments group by
+        // counting from the end (it is the last capture group)
+        $last = \count($matches);
+        if (!$last || !array_key_exists(--$last, $matches)) {
+            $matches[$last] = '';
         }
 
-        $segments = explode('/', trim($matches[5], '/'));
+        if ($this->apiPrefix && $last - 4 > 0) {
+            $this->apiPrefixMatches = array_slice($matches, 4, $last - 4);
+        }
+
+        $segments = explode('/', trim($matches[$last], '/'));
         // fill missing segments
         while (\count($segments) < 4) {
             $segments[] = null;
@@ -530,6 +545,14 @@ class Request implements RequestInterface
     public function requestBody(): ?DocumentInterface
     {
         return $this->requestBody;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function apiPrefixMatches(): ?array
+    {
+        return $this->apiPrefixMatches;
     }
 
     /**
