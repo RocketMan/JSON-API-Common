@@ -592,10 +592,10 @@ class Request implements RequestInterface
                 $relationshipPart = '/relationships' . $relationshipPart;
             }
 
-            $subRequest = new self(
+            $subRequest = new static(
                 $this->method(),
                 $this->uri()
-                    ->withPath(($this->fileInPath ? '/' . $this->fileInPath : '') . ($this->apiPrefix ? '/' . $this->apiPrefix : '') . '/' . $type . '/' . $id . $relationshipPart)
+                    ->withPath(($this->fileInPath ? '/' . $this->fileInPath : '') . ($this->apiPrefixMatches ? '/' . $this->apiPrefixMatches[0] : '') . '/' . $type . '/' . $id . $relationshipPart)
                     ->withQuery(
                         http_build_query([
                             'fields' => $queryFields,
