@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Enm\JsonApi\Model\Request;
 
+use Enm\JsonApi\Exception\BadRequestException;
 use Enm\JsonApi\Model\Common\KeyValueCollectionInterface;
 use Enm\JsonApi\Model\Document\DocumentInterface;
 use Enm\JsonApi\Model\Resource\ResourceInterface;
@@ -15,6 +16,20 @@ interface RequestInterface
 {
     public const ORDER_ASC = 'asc';
     public const ORDER_DESC = 'desc';
+
+    /**
+     * @param string $method
+     * @param UriInterface $uri
+     * @param DocumentInterface|null $requestBody
+     * @param null|string $apiPrefix
+     * @throws BadRequestException
+     */
+    public function __construct(
+        string $method,
+        UriInterface $uri,
+        ?DocumentInterface $requestBody = null,
+        ?string $apiPrefix = null
+    );
 
     /**
      * @return string
