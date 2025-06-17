@@ -1,4 +1,7 @@
 # Changelog
+## 3.2.2+rocketman.2
+1. added support for capture groups in Request apiPrefix
+
 ## 3.2.2+rocketman.1
 1. replaced implicit nullable parameters with nullable types
 1. fixed Request apiPrefix for multilevel prefixes
